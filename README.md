@@ -8,7 +8,7 @@ There are two other repositories on the same topic, one containing a camera serv
 
 ## Background
 
-It's not easy to study and monitor bats. We can't hear them and we can't see them when they are active without tools. There are tools like heterodyne and ultrasound recording devices that are widely used, but there aren't many tools available if we want to watch them to find out what they're doing in the dark of night. In my opinion, sound alone is not enough, but if we can combine audio recordings with video, we should be able to get more confident species identifications and also learn more about the behavior of these amazing animals.
+It's not easy to study and monitor bats. When they are active we can't hear them and we can't see them without tools. There are tools like heterodyne and ultrasound recording devices that are widely used, but there aren't many tools available if we want to watch them to find out what they're doing in the dark of night. In my opinion, sound alone is not enough, but if we can combine audio recordings with video, we should be able to get more confident species identifications and also learn more about the behavior of these amazing animals.
 
 I have been working for some years on a DIY detector based on the Raspberry Pi computers in combination with high quality ultrasonic microphones. Now it is time for the next step and add a camera system for night vision as a complement to the existing system for ultrasound.
 
@@ -27,7 +27,7 @@ The wavelength range of light that we can see is from about 400 nm to 700 nm. Th
 **Cameras with monochrome sensors** can only record grayscale images. They can be used with or without filters such as IR-cut, IR-pass, or color filters.
 When it is dark and the only light source is the infrared light that we use, then an IR-pass filter or using a clean path with no filters at all will work.
 
-Note: It can be confusing when things are marker as "IR". An IR-filter can be either an IR-cut or IR-pass filter. If the camera contains an IR-cut filter it has to be removed before we can use them in combination with infrared light sources.
+Note: It can be confusing when things are marker as "IR". An IR-filter can be either an IR-cut or IR-pass filter. If the camera, or lense, contains an IR-cut filter it has to be removed before we can use them in combination with infrared light sources.
 
 ## Sharp images of fast moving objects with visible light
 
@@ -39,6 +39,8 @@ There are numerous of incredible sharp photos of flying bats in books and on the
 - A tripod if you want a sharp background/surroundings.
 
 This is a typical setup for a full frame camera if you want a picture including both the flying bat near the camera and the further away background. 
+Check the image **WIRC-flying-bat-CC0.jpg** for an example when using this technique that could help for species identification.
+
 - Set both the camera and the flashes in manual mode.
 - Try to find a setup for depth-of-field to go from 0.5 m to infinity. For example focal length 18 mm, aperture f/13, and a focal distance 1 m will do that on a full frame camera.
 - Then adjust the cameras exposure time to capture the faint light from the background, for example 60 sec.
@@ -54,7 +56,8 @@ There are many infrared light sources, mainly used for surveillance application,
 
 The camera module I use mostly for test and development is called OV9281. It is not a standard Raspberry Pi camera but it is supported by the Raspberry Pi team. The OV9281 camera module is a 1 MP monochrome camera that can capture videos where each frame is exposed down to 0.029 ms, which is shorter than 1/34000 sec. OV9281 is also a "global shutter" camera that eliminates all problems with "rolling shutter". 
 
-Another camera with global shutter that I use is the "Raspberry Pi Global Shutter Camera" that features a 1.6 MP Sony IMX296 color sensor.  
+Another camera with global shutter that I use is the "Raspberry Pi Global Shutter Camera" that features a 1.6 MP Sony IMX296 color sensor.
+The Sony IMX296 sensor is also available from other manufacturer as monochrome. 
 
 Part of the specification for OV9281:
 Shutter type: Global Shutter, 
@@ -63,7 +66,23 @@ Resolution: 1280x800,
 Pixel size: 3.0 µm.
 Sensor image area: 3.896 x 2.453 mm.
 
+## My setup for test and development
+
+![WURB-2020](WIRC-2025-test-hardware-CC0.jpg?raw=true  "Infrared camera test setup.")
+
+This is what I used during initial test and development.
+- There are two Raspberry Pi 5, one Raspberry Pi 4 and one Raspberry Pi Zero 2 W. RPi 5 supports two cameras, but note that RPi 5 needs much better power supply compared to earlier models. RPi Zero is not recommended but it works if you don't stress it.
+- Both the Raspberry Pi Global shutter camera and OV9281 are used with different lens options. There is also an older non-GS camera attached.
+- I use both the bigger LED light sources with 6 LEDs and an infrared flashlight.
+- The bigger LED is available with different illumination angles. From 90 to 15 degrees.
+- For field work I use a 12V LiFePO4 battery that can power both the LED and the RPi5 with an additional HAT for powering the RPi5.
+
+## Selecting lenses and IR light sources
+
 The sensor image area for a full frame camera is 36.0 × 24.0 mm. That means that a 8 mm lens on the OV9282 camera will be comparable to a 72 mm lens on a full frame camera regarding field of view.
+
+Check the **FoV-calculation** files, available as both PNG and ODS (similar to Excel but I used LibreOffice). Then you can select a focal length of the lens to match your needs.
+Then the FoV in degrees is needed to select a maching infrared light source.
 
 ## The Raspberry Pi camera system
 
@@ -75,7 +94,8 @@ More information is available here:
 
 ## Installation
 
-This is a short instruction on how to install camera support on a Raspberry Pi computer. 
+This is a short instruction on how to install camera support on a Raspberry Pi computer.
+The user "wurb" is only needed if you are planning to use my other software for monitoring bats, but I use it as an example here.
 
 The first step is to use the **Raspberry Pi Imager** to install the *Raspbian Pi OS* on a SD card.
 I you want to also install the WURB software for sound then it is handy to use the same user name here.
@@ -113,10 +133,6 @@ Additions for camera support.
     sudo apt install -y ffmpeg
     sudo apt autoremove
 
-Then install the software in this repository if you want to run the example code.
-
-    git clone https://github.com/cloudedbats/wirc_2025_backend.git
-
 Then attached cameras should be available after a reboot if they are directly supported by Raspberry Pi.
 
 If you use other cameras like the OV9281 you have to tell the system what you are using.
@@ -136,4 +152,12 @@ If you use other cameras like the OV9281 you have to tell the system what you ar
 
 ## Example code
 
-TODO...to be continued...
+There are a lot of examples provided by the Raspberry Pi team:
+https://github.com/raspberrypi/picamera2/tree/main/examples
+
+## Contact
+
+Arnold Andreasson, Sweden.
+
+<info@cloudedbats.org>
+
